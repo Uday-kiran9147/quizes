@@ -70,13 +70,15 @@ class _MyHomePageState extends State<MyHomePage> {
             // color: Colors.white,
             // child: Column(children: [
             Scaffold(
-          appBar: AppBar(),
+          appBar: AppBar(
+            // title: Text("nagam"),
+          ),
           body: Container(
             child: SingleChildScrollView(
               child: Column(children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text("Good Morning....",
+                  child: Text("Hi Uday....",
                       style: TextStyle(
                           fontSize: 70,
                           fontStyle: FontStyle.normal,
@@ -86,14 +88,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    "Welcome to Quiz",
+                    "Attempt Quiz",
                     style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
                     overflow: TextOverflow.fade,
                     textDirection: TextDirection.ltr,
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: TextField(
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
@@ -103,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: TextField(
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
@@ -112,7 +114,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                 ),
-                ElevatedButton(onPressed: (){}, child: Text("Login"),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: ElevatedButton(onPressed: (){}, child: Text("Login"),
+                  ),
                 )
               ]),
             ),
