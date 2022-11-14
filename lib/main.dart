@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './widgets/loginpage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -65,66 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return MaterialApp(
         color: Colors.white,
         title: "hi",
-        home:
-            // Container(
-            // color: Colors.white,
-            // child: Column(children: [
-            Scaffold(
-          appBar: AppBar(
-            // title: Text("nagam"),
-          ),
-          body: Container(
-            child: SingleChildScrollView(
-              child: Column(children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text("Hi Uday....",
-                      style: TextStyle(
-                          fontSize: 70,
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.normal,
-                          color: Colors.grey)),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Attempt Quiz",
-                    style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
-                    overflow: TextOverflow.fade,
-                    textDirection: TextDirection.ltr,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: "Mobile",
-                      labelText: "Enter Mobile...."
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: "password",
-                      labelText: "Enter Password",
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: ElevatedButton(onPressed: (){}, child: Text("Login"),
-                  ),
-                )
-              ]),
-            ),
-          ),
-        )
-        // ]),
-        // ),
+        home:LoginPage()
         );
   }
 }
