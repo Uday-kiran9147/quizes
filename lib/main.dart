@@ -3,7 +3,6 @@ import 'package:quiz/widgets/HomePage.dart';
 import './widgets/loginpage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());

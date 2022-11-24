@@ -11,20 +11,20 @@ class UserProfile extends StatefulWidget {
 class _UserProfileState extends State<UserProfile> {
 
 
-  var uid="202151039";
+  var userID="202151039";
   var email="202151039@iiitv.ac.in";
 var time=DateTime.now();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("$uid"),
+        title: Text("$userID"),
       ),
       // margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       body: Column(
         children: [
           Text(
-            'User ID: $uid',
+            'User ID: $userID',
             // style: TextStyle(fontSize: 18.0),
           ),
           Row(

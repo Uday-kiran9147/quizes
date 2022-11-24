@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz/widgets/sign_up.dart';
 import './HomePage.dart';
@@ -19,9 +20,41 @@ class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  void login() {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => HomePage()));
+  void login() async {
+    try {
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HomePage(),
+        ),
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print("No User Found for that Email");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.orangeAccent,
+            content: Text(
+              "No User Found for that Email",
+              style: TextStyle(fontSize: 18.0, color: Colors.black),
+            ),
+          ),
+        );
+      } else if (e.code == 'wrong-password') {
+        print("Wrong Password Provided by User");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.orangeAccent,
+            content: Text(
+              "Wrong Password Provided by User",
+              style: TextStyle(fontSize: 18.0, color: Colors.black),
+            ),
+          ),
+        );
+      }
+    }
   }
 
   void dispose() {
@@ -99,18 +132,21 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   ElevatedButton(
-                    child: Text("Login"),
-                    onPressed: () => {
-                      if (_formkey.currentState!.validate())
-                        {
+                      onPressed: () {
+                        // Validate returns true if the form is valid, otherwise false.
+                        if (_formkey.currentState!.validate()) {
                           setState(() {
                             email = emailController.text;
                             password = passwordController.text;
-                          }),
-                          login()
-                        },
-                    },
-                  ),
+                          });
+                          login();
+                        }
+                      },
+                      child: Text(
+                        'Login',
+                        style: TextStyle(fontSize: 18.0),
+                      ),
+                    ),
                   TextButton(
                     onPressed: () {},
                     child: Text("forgot password"),
@@ -130,7 +166,7 @@ class _LoginPageState extends State<LoginPage> {
                           context,
                           PageRouteBuilder(
                             pageBuilder: (context, a, b) => SignUp(),
-                            transitionDuration: Duration(seconds: 20),
+                            transitionDuration: Duration(seconds: 0),
                           ),
                           (route) => false);
                     },
