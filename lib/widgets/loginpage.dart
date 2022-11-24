@@ -20,7 +20,7 @@ class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  void login() async {
+  void userlogin() async {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
@@ -30,7 +30,9 @@ class _LoginPageState extends State<LoginPage> {
           builder: (context) => HomePage(),
         ),
       );
-    } on FirebaseAuthException catch (e) {
+    }
+    // catch (e) {}
+     on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print("No User Found for that Email");
         ScaffoldMessenger.of(context).showSnackBar(
@@ -139,14 +141,14 @@ class _LoginPageState extends State<LoginPage> {
                             email = emailController.text;
                             password = passwordController.text;
                           });
-                          login();
+                          userlogin();
                         }
                       },
-                      child: Text(
-                        'Login',
-                        style: TextStyle(fontSize: 18.0),
-                      ),
+                    child: Text(
+                      'Login',
+                      style: TextStyle(fontSize: 18.0),
                     ),
+                  ),
                   TextButton(
                     onPressed: () {},
                     child: Text("forgot password"),

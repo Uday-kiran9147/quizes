@@ -49,7 +49,8 @@ class MyHomePage extends StatelessWidget {
           return MaterialApp(
             color: Colors.white,
             title: "Quiz",
-            home: LoginPage(),
+            home: 
+            LoginPage(),
             // HomePage(),
             theme: ThemeData(primaryColor: Colors.green),
             debugShowCheckedModeBanner: false,
