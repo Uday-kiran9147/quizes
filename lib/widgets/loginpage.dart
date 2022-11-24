@@ -1,8 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:rotating_icon_button/rotating_icon_button.dart';
+import 'package:quiz/widgets/sign_up.dart';
+import './HomePage.dart';
+import '../data/login_details.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final _formkey = GlobalKey<FormState>();
+
+  var email = "";
+  var password = "";
+
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -10,39 +31,55 @@ class LoginPage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Quiz"),
       ),
+      backgroundColor: Colors.white,
       body: Container(
-        child: SingleChildScrollView(
-            child: Column(children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text("Hi Uday....",
-                style: TextStyle(
-                    fontSize: 70,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.grey)),
+        child: Column(children: <Widget>[
+          FittedBox(
+            fit: BoxFit.fill,
+            child: Image.network(
+                "https://img.freepik.com/premium-vector/quiz-time-with-clock-design_624938-413.jpg?w=826",
+                height: 150
+                // width: 20,
+                ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              "Please Login....",
-              style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
+              "Welcome",
+              // "Please Login....",
+              style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
               overflow: TextOverflow.fade,
               textDirection: TextDirection.ltr,
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(20.0),
-            child: TextField(
+            child: TextFormField(
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please Enter Valid Email";
+                } else if (!value.contains('@')) {
+                  return "please enter a valid email";
+                }
+                return null;
+              },
+              controller: emailController,
               decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: "Mobile",
-                  labelText: "Enter Mobile...."),
+                  hintText: "Email",
+                  labelText: "Email ID.."),
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(20.0),
-            child: TextField(
+            child: TextFormField(
+              controller: passwordController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please Enter correct  Password";
+                }
+              },
+              obscureText: true,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: "password",
@@ -52,27 +89,52 @@ class LoginPage extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(20.0),
-            child:
-                // ElevatedButton(onPressed: (){}, child: Text("Login"),
-                RotatingIconButton(
-              onTap: () {},
-              elevation: 10.0,
-              shadowColor: Colors.pink,
-              borderRadius: 20.0,
-              rotateType: RotateType.semi,
-              clockwise: true,
-              padding: const EdgeInsets.symmetric(
-                vertical: 10,
-                horizontal: 40,
-              ),
-              background: Colors.blueAccent,
-              child: const Icon(
-                Icons.rocket,
-                color: Colors.white,
+            child: Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  ElevatedButton(
+                    child: Text("Login"),
+                    onPressed: () => {
+                      if (_formkey.currentState!.validate())
+                        {
+                          setState(() {
+                            email = emailController.text;
+                            password = passwordController.text;
+                          })
+                        },
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: ((context) => HomePage())))
+                    },
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child: Text("forgot password"),
+                  ),
+                ],
               ),
             ),
           ),
-        ])),
+          Container(
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text("Don't have account?"),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder: (context, a, b) => SignUp(),
+                            transitionDuration: Duration(seconds: 10),
+                          ),
+                          (route) => false);
+                    },
+                    child: Text("sign up"),
+                  ),
+                ]),
+          )
+        ]),
       ),
     );
   }
