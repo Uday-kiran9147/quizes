@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -28,9 +29,26 @@ class _SignUpState extends State<SignUp> {
     super.dispose();
   }
 
+  void registration() async {
+    if (password == confirmpassword) {
+      try {
+        UserCredential usercredential = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(email: email, password: password);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.redAccent,
+            content: Text("Regestered Successfully. Logged In..")),
+        );
+      } catch (e) {}
+    } else {
+      print("password didn't match");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text("User SignUp"),
       ),
@@ -117,7 +135,7 @@ class _SignUpState extends State<SignUp> {
                             password = passwordController.text;
                             confirmpassword = confirmpasswordController.text;
                           });
-                          // registration();
+                          registration();
                         }
                       },
                       child: Text(

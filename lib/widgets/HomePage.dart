@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz/widgets/user_profile.dart';
 import './loginpage.dart';
 
 class HomePage extends StatelessWidget {
@@ -10,7 +11,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       appBar: AppBar(),
       body: Container(
         child: ListView(
@@ -46,8 +46,12 @@ class HomePage extends StatelessWidget {
             ElevatedButton(
               child: Text("Login"),
               onPressed: () => {
-                Navigator.pop(context,
-                    MaterialPageRoute(builder: ((context) => LoginPage())))
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginPage(),
+                    ),
+                    ((route) => false))
               },
             ),
           ],
@@ -96,7 +100,18 @@ class HomePage extends StatelessWidget {
             ),
             Row(
               children: [
-                IconButton(onPressed: (dashboard), icon: Icon(Icons.person)),
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const UserProfile()),
+                    );
+                  },
+                  icon: Icon(Icons.person),
+
+                  // onPressed: (dashboard),{Navigator.push(context, MaterialPageRoute(builder: (context) => UserProfile()) }, icon: Icon(Icons.person)
+                ),
                 Text("Profile"),
               ],
             ),

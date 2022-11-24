@@ -19,6 +19,11 @@ class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  void login() {
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => HomePage()));
+  }
+
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
@@ -33,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
       backgroundColor: Colors.white,
       body: Container(
-        child: Column(children: <Widget>[
+        child: ListView(children: <Widget>[
           FittedBox(
             fit: BoxFit.fill,
             child: Image.network(
@@ -46,10 +51,10 @@ class _LoginPageState extends State<LoginPage> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
               "Welcome",
-              // "Please Login....",
               style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
               overflow: TextOverflow.fade,
               textDirection: TextDirection.ltr,
+              textAlign: TextAlign.center,
             ),
           ),
           Padding(
@@ -101,10 +106,9 @@ class _LoginPageState extends State<LoginPage> {
                           setState(() {
                             email = emailController.text;
                             password = passwordController.text;
-                          })
+                          }),
+                          login()
                         },
-                      // Navigator.push(context,
-                      //     MaterialPageRoute(builder: ((context) => HomePage())))
                     },
                   ),
                   TextButton(
@@ -126,7 +130,7 @@ class _LoginPageState extends State<LoginPage> {
                           context,
                           PageRouteBuilder(
                             pageBuilder: (context, a, b) => SignUp(),
-                            transitionDuration: Duration(seconds: 10),
+                            transitionDuration: Duration(seconds: 20),
                           ),
                           (route) => false);
                     },

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:quiz/widgets/HomePage.dart';
 import './widgets/loginpage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -17,37 +20,41 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class MyHomePage extends StatelessWidget {
+  MyHomePage({super.key, required this.title});
   final String title;
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 
-class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      color: Colors.white,
-      title: "Quiz",
-      home:
-          // LoginPage(),
-          HomePage(),
-      theme: ThemeData(primaryColor: Colors.green),
-    );
+    return FutureBuilder(
+        future: _initialization,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            print("something went wrong");
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return MaterialApp(
+            color: Colors.white,
+            title: "Quiz",
+            home: LoginPage(),
+            // HomePage(),
+            theme: ThemeData(primaryColor: Colors.green),
+            debugShowCheckedModeBanner: false,
+          );
+        });
   }
 }
