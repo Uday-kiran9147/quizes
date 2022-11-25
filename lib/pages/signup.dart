@@ -1,39 +1,45 @@
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:quiz/widgets/HomePage.dart';
-import 'package:quiz/widgets/loginpage.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({super.key});
+import 'login.dart';
+// import 'package:quiz/widgets/HomePage.dart';
+// import 'package:quiz/widgets/loginpage.dart';
+class Signup extends StatefulWidget {
+  Signup({Key? key}) : super(key: key);
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  _SignupState createState() => _SignupState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _SignupState extends State<Signup> {
   final _formKey = GlobalKey<FormState>();
+
   var email = "";
   var password = "";
-  var confirmpassword = "";
-
+  var confirmPassword = "";
+  // Create a text controller and use it to retrieve the current value
+  // of the TextField.
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  final confirmpasswordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
+  @override
   void dispose() {
+    // Clean up the controller when the widget is disposed.
     emailController.dispose();
     passwordController.dispose();
-    confirmpasswordController.dispose();
+    confirmPasswordController.dispose();
     super.dispose();
   }
 
-  void registration() async {
-    if (password == confirmpassword) {
+  registration() async {
+    if (password == confirmPassword) {
       try {
         UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
@@ -50,7 +56,7 @@ class _SignUpState extends State<SignUp> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => LoginPage(),
+            builder: (context) => Login(),
           ),
         );
       } on FirebaseAuthException catch (e) {
@@ -95,7 +101,6 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text("User SignUp"),
       ),
@@ -111,7 +116,7 @@ class _SignUpState extends State<SignUp> {
                   autofocus: false,
                   decoration: InputDecoration(
                     labelText: 'Email: ',
-                    // labelStyle: TextStyle(fontSize: 20.0),
+                    labelStyle: TextStyle(fontSize: 20.0),
                     border: OutlineInputBorder(),
                     errorStyle:
                         TextStyle(color: Colors.redAccent, fontSize: 15),
@@ -134,10 +139,10 @@ class _SignUpState extends State<SignUp> {
                   obscureText: true,
                   decoration: InputDecoration(
                     labelText: 'Password: ',
-                    // labelStyle: TextStyle(fontSize: 20.0),
+                    labelStyle: TextStyle(fontSize: 20.0),
                     border: OutlineInputBorder(),
-                    // errorStyle:
-                    //     TextStyle(color: Colors.redAccent, fontSize: 15),
+                    errorStyle:
+                        TextStyle(color: Colors.redAccent, fontSize: 15),
                   ),
                   controller: passwordController,
                   validator: (value) {
@@ -155,12 +160,12 @@ class _SignUpState extends State<SignUp> {
                   obscureText: true,
                   decoration: InputDecoration(
                     labelText: 'Confirm Password: ',
-                    // labelStyle: TextStyle(fontSize: 20.0),
+                    labelStyle: TextStyle(fontSize: 20.0),
                     border: OutlineInputBorder(),
                     errorStyle:
                         TextStyle(color: Colors.redAccent, fontSize: 15),
                   ),
-                  controller: confirmpasswordController,
+                  controller: confirmPasswordController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please Enter Password';
@@ -180,14 +185,14 @@ class _SignUpState extends State<SignUp> {
                           setState(() {
                             email = emailController.text;
                             password = passwordController.text;
-                            confirmpassword = confirmpasswordController.text;
+                            confirmPassword = confirmPasswordController.text;
                           });
                           registration();
                         }
                       },
                       child: Text(
                         'Sign Up',
-                        // style: TextStyle(fontSize: 18.0),
+                        style: TextStyle(fontSize: 18.0),
                       ),
                     ),
                   ],
@@ -205,7 +210,7 @@ class _SignUpState extends State<SignUp> {
                                 PageRouteBuilder(
                                   pageBuilder:
                                       (context, animation1, animation2) =>
-                                          LoginPage(),
+                                          Login(),
                                   transitionDuration: Duration(seconds: 0),
                                 ),
                               )
