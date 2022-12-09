@@ -1,2 +1,2 @@
-# quizes
-semister project
+
+project quiz app
